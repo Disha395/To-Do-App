@@ -5,6 +5,7 @@ import com.example.mytodolistapi.service.ToDoService;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Pattern;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,13 +18,17 @@ Delete a To-Do item
 Update the completion status of a To-Do item
  */
 
-@RequiredArgsConstructor
+
 @RequestMapping("/api/todos")
 @CrossOrigin(origins = "http://localhost:3000")
 @RestController
 public class ToDoController {
 
     private final ToDoService toDoService;
+    @Autowired
+    public ToDoController(ToDoService toDoService) {
+        this.toDoService = toDoService;
+    }
 
     @GetMapping
     public List<ToDo> getToDos(){
@@ -41,9 +46,10 @@ public class ToDoController {
         toDoService.deleteToDo(id);
     }
 
-    @PatchMapping("/{id}")
-    public void updateToDo(@PathVariable Long id, @RequestParam Boolean Completed){
-        toDoService.updateToDo(id, Completed);
+    @PatchMapping("{id}")
+    public void updateToDo(@PathVariable long id, @RequestParam boolean completed) {
+        toDoService.updateToDo(id, completed);
     }
+
 
 }

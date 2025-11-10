@@ -4,14 +4,20 @@ import com.example.mytodolistapi.exception.ToDoNotFoundException;
 import com.example.mytodolistapi.model.ToDo;
 import com.example.mytodolistapi.repository.ToDoRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-@RequiredArgsConstructor
+
 @Service
 public class ToDoServiceImpl implements ToDoService{
 
     private final ToDoRepository toDoRepository;
+
+    @Autowired
+    public ToDoServiceImpl(ToDoRepository toDoRepository) {
+        this.toDoRepository = toDoRepository;
+    }
 
     @Override
     public ToDo getToDo(long id) {
